@@ -9,11 +9,20 @@ const path = require('path');
 // Импорт настроек базы данных
 const config = require('./config/db');
 
+// Импортируем вынесенынй роутинг
+const account = require('./routes/account');
+
 // Создаем экземпляр приложения Express
 const app = express();
 
 // Общепринято брать 3000
 const port = 3000;
+
+// Добавляет cors
+app.use(cors());
+
+// Добавляем body-parser
+app.use(bodyParser.json());
 
 // Подключение к базе данных
 mongoose.connect(config.db);
@@ -34,3 +43,6 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
 	res.send('Main page');
 });
+
+// Если адресс начинаяется с /account, тогда вызывается файл роутинга
+app.use('/account', account);
