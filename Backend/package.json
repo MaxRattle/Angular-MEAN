@@ -2,11 +2,12 @@
 	"name": "backend",
 	"version": "1.0.0",
 	"description": "blog",
-	"main": "index.mjs",
-	"type": "module",
+	"main": "index.js",
+	"type": "commonjs",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.mjs"
+		"start": "node index.js",
+		"dev": "nodemon index.js"
 	},
 	"author": "MaxRattle",
 	"license": "ISC",
@@ -19,5 +20,8 @@
 		"mongoose": "^8.2.1",
 		"passport": "^0.7.0",
 		"passport-jwt": "^4.0.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.0"
 	}
 }
