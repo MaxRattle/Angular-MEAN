@@ -1,11 +1,14 @@
 // Импорт библиотек из зависимостей
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const path = require('path');
-const bcrypt = require('bcrypt');
+const cors = require('cors'); // позволяет обрабатывать HTTP-заголовки CORS (механизмы безопасности), по сути дает права на доступ/ограничения в ответе на запрос
+const bodyParser = require('body-parser'); // парсит данные с запроса (req) в удобном формате
+const mongoose = require('mongoose'); // позволяет работать mongoDB
+const passport = require('passport'); // задает параметры авторизации
+const path = require('path'); // модуль файловой системы
+const bcrypt = require('bcrypt'); // шифрует данные
+
+// Начались проблемы с совместимостью
+const session = require('express-session'); // позволяет управлять сессиями в Express, раннее было по умолчанию в пакете Express
 
 // Импорт настроек базы данных
 const config = require('./config/db');
@@ -18,6 +21,21 @@ const app = express();
 
 // Общепринято брать 3000
 const port = 3000;
+
+// Инициализируем passport
+app.use(
+	session({
+		secret: config.secret,
+		resave: false,
+		saveUninitialized: false,
+	})
+);
+
+app.use(passport.session());
+app.use(passport.initialize());
+
+// Импортируем функционал авторизации
+require('./config/passport')(passport);
 
 // Добавляет cors
 app.use(cors());
