@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 // Импорт настроек базы данных
 const config = require('./config/db');
