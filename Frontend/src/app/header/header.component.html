@@ -1,0 +1,32 @@
+<section>
+    <p>
+        <mat-toolbar class="toolbar" color="primary">
+            <span class="blog">Blog</span>
+            <span class="example-spacer"></span>
+            <a
+                [routerLink]="'/'"
+                mat-button
+                target="_blank"
+                class="home"
+            >Home</a>
+            <a
+                [routerLink]="'/dashboard'"
+                mat-button
+                target="_blank"
+                class="dashboard"
+            >Dashboard</a>
+            <button
+                [routerLink]="'/auth'"
+                class="in"
+                mat-flat-button
+                color="warn"
+            >Sign in</button>
+            <button
+                [routerLink]="'/reg'"
+                class="up"
+                mat-flat-button
+                color="accent"
+            >Sign up</button>
+        </mat-toolbar>
+    </p>
+</section>
