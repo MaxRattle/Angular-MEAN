@@ -1,1 +1,26 @@
-<p>auth works!</p>
+<app-header></app-header>
+<section>
+    <div class="container">
+        <h1>Sign in</h1>
+        <div class="forms">
+            <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Ex. pat@example.com">
+                </mat-form-field>
+            </form>
+            <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Your password">
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="checkbox">
+            <mat-checkbox class="example-margin" color="warn">Remember me</mat-checkbox>
+        </div>
+        <div class="sign-in">
+            <button type="submit" mat-stroked-button color="accent">Sign in</button>
+        </div>
+    </div>
+</section>

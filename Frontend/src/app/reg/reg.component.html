@@ -1,1 +1,106 @@
-<p>reg works!</p>
+<app-header></app-header>
+<section>
+    <div class="container">
+        <h1>Please sign up!</h1>
+        <form (submit)="signUp()" class="forms">
+                <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Name</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        [formControl]="nameFormControl"
+                        placeholder="Name"
+                        [(ngModel)]="name"
+                        name = "name"
+                    >
+                    @if (nameFormControl.hasError('required')) {
+                    <mat-error>
+                        Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    }
+                    @if (nameFormControl.hasError('pattern')) {
+                      <mat-error>
+                        Name should only contain a single language (e.g., English or Russian) and no spaces
+                      </mat-error>
+                      }
+                </mat-form-field>
+            </form>
+            <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Login</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        [formControl]="loginFormControl"
+                        placeholder="Login"
+                        [(ngModel)]="login"
+                        name = "login"
+                    >
+                    @if (loginFormControl.hasError('required')) {
+                    <mat-error>
+                      Login is
+                        <strong>required</strong>
+                    </mat-error>
+                    }
+                    @if (loginFormControl.hasError('pattern')) {
+                    <mat-error>
+                      Login should only contain a single language (e.g., English or Russian) and no spaces
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </form>
+            <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Email</mat-label>
+                    <input
+                        type="email"
+                        matInput
+                        [formControl]="emailFormControl"
+                        placeholder="Ex. pat@example.com"
+                        [(ngModel)]="email"
+                        name = "email"
+                    >
+                    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                    <mat-error>Please enter a valid email address</mat-error>
+                    }
+                  @if (emailFormControl.hasError('required')) {
+                    <mat-error>
+                        Email is
+                        <strong>required</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </form>
+            <form class="form">
+                <mat-form-field class="field-full-width">
+                    <mat-label>Password</mat-label>
+                    <input
+                        type="password"
+                        matInput
+                        [formControl]="passwordFormControl"
+                        placeholder="Your password"
+                        [(ngModel)]="password"
+                        name = "password"
+                    >
+                    @if (passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')) {
+                    <mat-error>Password length must be more than 8 symbols. Please enter a valid password.</mat-error>
+                    }
+                    @if (passwordFormControl.hasError('maxlength') && !passwordFormControl.hasError('required')) {
+                    <mat-error>Password length must be less than 20 symbols. Please enter a valid password</mat-error>
+                    }
+                    @if (passwordFormControl.hasError('required')) {
+                    <mat-error>
+                        Password is
+                        <strong>required</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </form>
+            <div class="sign-up">
+                <button type="submit" mat-stroked-button color="accent">Sign up</button>
+            </div>
+          </form>
+    </div>
+</section>
