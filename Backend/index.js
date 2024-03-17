@@ -1,67 +1,49 @@
-// Импорт библиотек из зависимостей
-const express = require('express');
-const cors = require('cors'); // позволяет обрабатывать HTTP-заголовки CORS (механизмы безопасности), по сути дает права на доступ/ограничения в ответе на запрос
-const bodyParser = require('body-parser'); // парсит данные с запроса (req) в удобном формате
-const mongoose = require('mongoose'); // позволяет работать mongoDB
-const passport = require('passport'); // задает параметры авторизации
-const path = require('path'); // модуль файловой системы
-const bcrypt = require('bcrypt'); // шифрует данные
-
-// Начались проблемы с совместимостью
-const session = require('express-session'); // позволяет управлять сессиями в Express, раннее было по умолчанию в пакете Express
-
-// Импорт настроек базы данных
-const config = require('./config/db');
-
-// Импортируем вынесенынй роутинг
-const account = require('./routes/account');
+const express = require('express'); //импортируем express-фреймворк
+const connect = require('./config/connect'); // Импорт настроек базы данных // коннекта
+const account = require('./routes/account'); // Импортирт роутинга /account
+const bcrypt = require('bcrypt'); // Импорт библиотеки для хеширования пароля
+const jwt = require('jsonwebtoken'); // Импорт для аутентификации по jwt токену
+const database = require('./config/db'); // Импорт секретного ключа из db
+const cors = require('cors'); // Импорт cors, позволяет принимать запросы c Frontend
 
 // Создаем экземпляр приложения Express
 const app = express();
+const PORT = 3000; // Общепринятый порт сервера
 
-// Общепринято брать 3000
-const port = 3000;
-
-// Инициализируем passport
-app.use(
-	session({
-		secret: config.secret,
-		resave: false,
-		saveUninitialized: false,
-	})
-);
-
-app.use(passport.session());
-app.use(passport.initialize());
-
-// Импортируем функционал авторизации
-require('./config/passport')(passport);
-
-// Добавляет cors
+// Разрешаем CORS запросы для всех доменов // пока что так
 app.use(cors());
 
-// Добавляем body-parser
-app.use(bodyParser.json());
+// Middleware для парсинга тела запроса как JSON
+app.use(express.json());
 
-// Подключение к базе данных
-mongoose.connect(config.db);
+// Обработка входящих запросов, которые передают данные в формате x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
 
-mongoose.connection.on('connected', () => {
-	console.log('Successfull connection to the database');
+// Middleware для проверки токена
+const authenticateToken = (req, res, next) => {
+	const authHeader = req.headers['authorization'];
+	const token = authHeader && authHeader.split(' ')[1];
+
+	if (token == null) return res.sendStatus(401);
+	jwt.verify(token, database.secret, (err, user) => {
+		if (err) return res.sendStatus(403);
+		req.user = user;
+		next();
+	});
+};
+
+// Запуск сервера на PORT
+app.listen(PORT, () => {
+	console.log(`Server work on ${PORT}. http://localhost:${PORT}/`);
 });
 
-mongoose.connection.on('error', err => {
-	console.log('Not successfull connection to the database');
-});
-
-// Запуск сервера
-app.listen(port, () => {
-	console.log(`The server is running on http://localhost:${port}`);
-});
-
+// Стартовый GER request для '/'
 app.get('/', (req, res) => {
 	res.send('Main page');
 });
 
 // Если адресс начинаяется с /account, тогда вызывается файл роутинга
 app.use('/account', account);
+
+// Применение middleware 'authenticateToken' для защиты маршрутов, требующих аутентификации
+app.use('/account/dashboard', authenticateToken);

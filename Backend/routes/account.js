@@ -1,71 +1,61 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
-const passport = require('passport');
-const jwt = require('jsonwebtoken'); // позволяет работать с jwt
-const config = require('../config/db');
-// Роутинг аккаунта
-// Когда пользователь будет на странице /reg и отправлять post запрос, т.е. запись данных в запрос объект User, затем addUser добавляет пользователя в базу
-router.post('/reg', (req, res) => {
-	let newUser = new User({
+const router = express.Router(); // Создание экземпляр объекта маршрутизатора Express
+const user = require('../models/user'); // Импорт модели User
+const bcrypt = require('bcrypt'); // Импорт библиотеки для хещирования паролей
+const jwt = require('jsonwebtoken'); // Импорт для аутентификации по jwt токену
+const database = require('../config/db'); // Импорт секретного ключа из db
+
+// Роутинг регистрации /account/reg
+router.post('/reg', async (req, res) => {
+	// Создаем объект по схеме User, в конце body указывается имя формы-отправки
+	const data = {
 		name: req.body.name,
 		email: req.body.email,
 		login: req.body.login,
 		password: req.body.password,
-	});
+	};
+	// Проверка является ли пользователь уже существующим
+	const existingUser = await user.findOne({ name: data.name });
 
-	User.addUser(newUser, (err, user) => {
-		if (err) {
-			res.json({ success: false, msg: 'User has not been added.' });
-		} else {
-			res.json({ success: true, msg: 'User has not been added.' });
-		}
-	});
-});
+	if (existingUser) {
+		res.send('User already exists. Please choose a different username.');
+	} else {
+		// Хешируем пароль с помощью bcrypt
+		const saltRounds = 10; // Число итераций хеширования
+		const salt = await bcrypt.genSalt(saltRounds);
+		const hashedPassword = await bcrypt.hash(data.password, salt);
 
-router.post('/auth', (req, res) => {
-	const login = req.body.login;
-	const password = req.body.password;
+		data.password = hashedPassword; // Заменяем обычный пароль на хешированный
 
-	// получения пользователя
-	User.getUserByLogin(login, (err, user) => {
-		if (err) throw err;
-		if (!user) {
-			return res.json({ success: false, msg: 'This user was not found.' });
-		}
-
-		// сравнение полученного пользователя и пользователя из БД
-		User.comparePass(password, user.password, (err, isMatch) => {
-			if (err) throw err;
-			if (isMatch) {
-				// устанавливаем токен
-				const token = jwt.sign(user.toJSON(), config.secret, {
-					expiresIn: 3600 * 24, // expiresIn задает сколько времени пользователь будет авторизован (здесь сутки)
-				});
-				res.json({
-					sucess: true,
-					token: 'JWT' + token,
-					user: {
-						id: user._id, // _id так записывается обращение в MongoDB
-						name: user.name,
-						login: user.login,
-						email: user.email,
-					},
-				});
-			} else {
-				return res.json({ success: false, msg: 'Password mismatch.' });
-			}
-		});
-	});
-});
-
-// с помощью passport можно ограничить доступ, если пользователь не авторизован
-router.get(
-	'/dashboard',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		res.send('Dashboard page');
+		const userData = await user.insertMany(data);
+		console.log(userData);
 	}
-);
+});
+
+// Роутинг аутентификации /account/auth
+router.post('/auth', async (req, res) => {
+	// Попытаемся найти пользователя
+	try {
+		const check = await user.findOne({ email: req.body.email });
+		if (!check) {
+			return res.status(404).json({ error: 'User email cannot found' });
+		}
+		// Сравниваем хешированный пароль с БД с "открытым" паролем
+		const isPasswordMatch = await bcrypt.compare(
+			req.body.password,
+			check.password
+		);
+		if (!isPasswordMatch) {
+			return res.status(401).json({ error: 'Wrong password' });
+		} else {
+			const token = jwt.sign({ id: check._id }, database.secret, {
+				expiresIn: '1h',
+			});
+			return res.json({ token });
+		}
+	} catch (error) {
+		return res.status(500).json({ error: 'Wrong details' });
+	}
+});
 
 module.exports = router;

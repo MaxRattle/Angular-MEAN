@@ -14,7 +14,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MatButtonModule } from '@angular/material/button';
 
-import { FlashMessageService } from '../servises/flash-message.service';
+import { FlashMessageService } from '../services/flash-message.service';
+
+import { RegService } from '../services/reg.service';
+import { HttpClientModule } from '@angular/common/http';
+import { RegistrationUser } from '../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reg',
@@ -27,9 +32,11 @@ import { FlashMessageService } from '../servises/flash-message.service';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    HttpClientModule,
   ],
   templateUrl: './reg.component.html',
   styleUrl: './reg.component.scss',
+  providers: [RegService],
 })
 export class RegComponent {
   // Валидаторы
@@ -56,10 +63,14 @@ export class RegComponent {
   email!: string;
   password!: string;
 
-  constructor(private flashMessageService: FlashMessageService) {}
+  constructor(
+    private flashMessageService: FlashMessageService,
+    private regService: RegService,
+    private router: Router
+  ) {}
 
   signUp() {
-    const user = {
+    const user: RegistrationUser = {
       name: this.name,
       login: this.login,
       email: this.email,
@@ -81,6 +92,9 @@ export class RegComponent {
       !this.passwordFormControl.invalid
     ) {
       this.flashMessageService.show('Submit sucess.');
+      console.log('signUp called');
+      this.regService.regUser(user);
+      this.router.navigate(['/account/auth']);
       return;
     }
   }
