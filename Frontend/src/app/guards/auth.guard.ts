@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    if (!this.authService.isAuthenticated()) {
+    if (localStorage.getItem('authToken') != null) {
       // Если пользователь авторизован, разрешаем доступ к маршруту
       console.log('canActivate return TRUE Auth success');
       return true;

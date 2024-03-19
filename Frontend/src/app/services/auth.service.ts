@@ -39,14 +39,11 @@ export class AuthService {
   }
 
   getAuthToken(): string | null {
+    console.log(this.token);
     return this.token;
   }
 
-  isAuthenticated(): boolean {
-    // Проверяем, есть ли токен аутентификации
-    const token = this.getAuthToken();
-    console.log(!!token);
-
-    return !!token; // Преобразуем token в булево значение
+  logoutUser(): void {
+    localStorage.clear();
   }
 }

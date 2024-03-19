@@ -88,6 +88,8 @@ export class AuthComponent {
 
           // Сохранение токена в локальном хранилище браузера
           localStorage.setItem('authToken', token);
+          // Сохранение объекта пользователя в локальном хранилище браузера
+          localStorage.setItem('authUser', JSON.stringify(user));
 
           // Отправка запроса на защищенный маршрут с токеном в заголовке
           const headers = new HttpHeaders({

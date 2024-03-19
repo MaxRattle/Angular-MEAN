@@ -4,7 +4,7 @@
             <span class="blog">Blog</span>
             <span class="example-spacer"></span>
             <a [routerLink]="'/'" mat-button class="home">Home</a>
-            <a (click)="dashPage()" mat-button class="dashboard">Dashboard</a>
+            <a [routerLink]="'/account/dashboard'" mat-button class="dashboard">Dashboard</a>
             <button
                 [routerLink]="'/account/auth'"
                 class="in"
@@ -17,6 +17,7 @@
                 mat-flat-button
                 color="accent"
             >Sign up</button>
+            <button (click)="logout()" mat-button class="logout">Logout</button>
         </mat-toolbar>
     </p>
 </section>
