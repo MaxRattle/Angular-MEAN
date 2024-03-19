@@ -16,7 +16,11 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { FlashMessageService } from '../services/flash-message.service';
 
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
 import { AuthenticationUser } from '../interfaces/user';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -51,7 +55,8 @@ export class AuthComponent {
   constructor(
     private flashMessageService: FlashMessageService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   signIn() {
@@ -68,19 +73,47 @@ export class AuthComponent {
       !this.passwordFormControl.invalid
     ) {
       // Успешная аутентификация
-      this.authService.authUser(user).subscribe(
-        () => {
+      this.authService.authUser(user).subscribe({
+        next: () => {
           this.flashMessageService.show('Auth success.');
           console.log('Authentication Successfully');
-          this.router.navigate(['/account/dashboard']);
+
+          // Получение токена после успешной аутентификации
+          const token = this.authService.getAuthToken();
+          if (!token) {
+            // Обработка случая, когда токен отсутствует
+            console.log('Token not found');
+            return;
+          }
+
+          // Сохранение токена в локальном хранилище браузера
+          localStorage.setItem('authToken', token);
+
+          // Отправка запроса на защищенный маршрут с токеном в заголовке
+          const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`,
+          });
+
+          this.http
+            .get('http://localhost:3000/account/dashboard', { headers })
+            .subscribe({
+              next: () => {
+                // Обработка успешного доступа
+                this.router.navigate(['/account/dashboard']);
+              },
+              error: (error) => {
+                // Обработка ошибки HTTP-запроса
+                console.error('Error accessing protected route:', error);
+              },
+            });
         },
-        (error: any) => {
+        error: (error: any) => {
           // Ошибка аутентификации
           this.flashMessageService.show('Authentication failed.');
           console.log('Authentication failed');
           console.error('Authentication failed', error);
-        }
-      );
+        },
+      });
     }
   }
 }

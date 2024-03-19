@@ -46,4 +46,8 @@ app.get('/', (req, res) => {
 app.use('/account', account);
 
 // Применение middleware 'authenticateToken' для защиты маршрутов, требующих аутентификации
-app.use('/account/dashboard', authenticateToken);
+app.use('/account/dashboard', authenticateToken, (req, res) => {
+	res.status(200).json({
+		msg: 'successfull backend dashboard',
+	});
+});
