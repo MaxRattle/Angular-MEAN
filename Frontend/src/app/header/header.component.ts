@@ -22,10 +22,16 @@ export class HeaderComponent {
     private router: Router,
     private http: HttpClient
   ) {}
+
   logout() {
     this.authService.logoutUser();
     this.flashMessageService.show('User logout');
     console.log('User logout successfully');
     this.router.navigate(['/account/auth']);
+  }
+
+  // геттер для отслеживания состояние токена авторизации
+  get authState(): boolean {
+    return localStorage.getItem('authToken') !== null;
   }
 }

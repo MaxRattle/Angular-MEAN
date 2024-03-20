@@ -5,19 +5,23 @@
             <span class="example-spacer"></span>
             <a [routerLink]="'/'" mat-button class="home">Home</a>
             <a [routerLink]="'/account/dashboard'" mat-button class="dashboard">Dashboard</a>
-            <button
-                [routerLink]="'/account/auth'"
-                class="in"
-                mat-flat-button
-                color="warn"
-            >Sign in</button>
-            <button
-                [routerLink]="'/account/reg'"
-                class="up"
-                mat-flat-button
-                color="accent"
-            >Sign up</button>
-            <button (click)="logout()" mat-button class="logout">Logout</button>
+            @if (!authState) {
+              <button
+                  [routerLink]="'/account/auth'"
+                  class="in"
+                  mat-flat-button
+                  color="warn"
+              >Sign in</button>
+              <button
+                  [routerLink]="'/account/reg'"
+                  class="up"
+                  mat-flat-button
+                  color="accent"
+              >Sign up</button>
+            }
+            @if (authState) {
+              <button  (click)="logout()" mat-button class="logout">Logout</button>
+            }
         </mat-toolbar>
     </p>
 </section>
