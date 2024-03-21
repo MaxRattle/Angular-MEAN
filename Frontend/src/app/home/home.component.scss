@@ -1,0 +1,106 @@
+// секция навигации
+.nav {
+  margin: 0 auto;
+  display: grid;
+  width: 65%;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.nav_element {
+  display: inline-block;
+  text-align: center;
+  padding: 10px;
+}
+//
+.home_picture {
+  margin: 0 auto;
+  width: 75%;
+  //
+  position: relative;
+  // height: 400px;
+  overflow: hidden;
+
+  margin-top: 15px;
+}
+
+// секция главного блока
+.picture {
+  // position: absolute;
+  filter: saturate(100%) sepia(10%) brightness(50%);
+  min-height: 400px;
+  width: 100%;
+  margin: -10% 0 0 0;
+}
+
+.home_description {
+  margin: 20px;
+  padding: 20px;
+  width: 50%;
+  min-width: 270px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+
+  // background-color: rgba(0, 0, 0, 0.5); /* прозрачный фон */
+  color: white;
+}
+
+.title {
+  font-size: 3.5em;
+  letter-spacing: 5px;
+  word-spacing: 3px;
+  line-height: 45px;
+}
+
+.title_p {
+  font-size: 1.5em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  word-spacing: 5px;
+  line-height: 20px;
+  text-indent: 15px;
+  text-align: justify;
+}
+
+.title_continue {
+  font-size: 2em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+// секция карточек
+.cards_block {
+  margin: 0 auto;
+  display: grid;
+  max-width: 75%;
+  justify-items: center;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fit, minmax(28%, 1fr));
+  gap: 10px;
+}
+
+.card {
+  max-width: 100%;
+}
+
+.card_tittle {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: #000;
+}
+
+// .card_header-image {
+//   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+//   background-size: cover;
+// }
