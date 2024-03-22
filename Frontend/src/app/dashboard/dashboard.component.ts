@@ -16,6 +16,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 import { FormGroupDirective } from '@angular/forms';
 
+import { QuillModule } from 'ngx-quill';
+
 //
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -43,6 +45,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    QuillModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
