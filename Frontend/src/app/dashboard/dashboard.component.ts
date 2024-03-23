@@ -24,6 +24,8 @@ import { Router } from '@angular/router';
 
 import { Post } from '../interfaces/post';
 
+import { DashService } from '../services/dash.service';
+
 // Кастомный обработчик ошибок
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -76,7 +78,7 @@ export class DashboardComponent {
 
   constructor(
     private flashMessageService: FlashMessageService,
-    // private regService: RegService,
+    private dashService: DashService,
     private router: Router
   ) {}
 
@@ -108,11 +110,7 @@ export class DashboardComponent {
       !this.photoFormControl.invalid ||
       !this.textFormControl.invalid
     ) {
-      this.flashMessageService.show('Submit sucess.');
-      console.log('Post created');
-      // this.regService.regUser(user);
-      // this.router.navigate(['/account/auth']);
-      return;
+      this.dashService.dashUser(post);
     }
   }
 }

@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt'); // Импорт библиотеки для х
 const jwt = require('jsonwebtoken'); // Импорт для аутентификации по jwt токену
 const database = require('../config/db'); // Импорт секретного ключа из db
 
+const postDash = require('../models/post');
+
 // Роутинг регистрации /account/reg
 router.post('/reg', async (req, res) => {
 	// Создаем объект по схеме User, в конце body указывается имя формы-отправки
@@ -55,6 +57,38 @@ router.post('/auth', async (req, res) => {
 		}
 	} catch (error) {
 		return res.status(500).json({ error: 'Wrong details' });
+	}
+});
+
+// Роутинг постов /account/dashboard
+router.post('/dashboard', async (req, res) => {
+	// Создаем объект по схеме Post, в конце body указывается имя формы-отправки
+	const data = {
+		category: req.body.category,
+		title: req.body.title,
+		photo: req.body.photo,
+		text: req.body.text,
+		author: req.body.author,
+		date: req.body.date,
+	};
+
+	// Создаем новый экземпляр Post
+	const newPost = new postDash(data);
+
+	try {
+		// Сохраняем новый пост в базу данных, используя async/await
+		const savedPost = await newPost.save();
+		return res.json({
+			success: true,
+			result: 'Post added successfully',
+			post: savedPost,
+		});
+	} catch (err) {
+		return res.json({
+			success: false,
+			result: 'Post not added!',
+			error: err.message,
+		});
 	}
 });
 
