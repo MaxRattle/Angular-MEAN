@@ -1,42 +1,52 @@
 <app-header></app-header>
 <!--  -->
 <section>
-  <div class="forms">
-    <mat-form-field class="form">
-        <mat-label>Category, Tittle and Photo:</mat-label>
-        <mat-select
-            name="category"
-            id="category"
-            [formControl]="selected"
-            [errorStateMatcher]="matcher"
-        >
-            <mat-option value="Anime">Anime</mat-option>
-            <mat-option value="Videogames">Videogames</mat-option>
-            <mat-option value="Music">Music</mat-option>
-            <mat-option value="Frontend">Frontend</mat-option>
-            <mat-option value="Backend">Backend</mat-option>
-            <mat-option value="Blockchain">Blockchain</mat-option>
-        </mat-select>
-        <mat-hint>Make a selection!</mat-hint>
-        @if (selected.hasError('required')) {
-        <mat-error>You must make a selection</mat-error>
-        }
-    </mat-form-field>
-    <!--  -->
-    <mat-form-field class="form">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" name="title" id="inputTitle" [(ngModel)]="title">
-        @if (title) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        }
-    </mat-form-field>
-  </div>
+  <form (submit)="createPost()">
+    <div class="forms">
+        <h1>Create Post:</h1>
+        <mat-form-field class="form">
+            <mat-label>Category, Tittle and Photo:</mat-label>
+            <mat-select
+                name="category"
+                id="category"
+                [formControl]="selected"
+                [errorStateMatcher]="matcher"
+            >
+                <mat-option value="Anime">Anime</mat-option>
+                <mat-option value="Videogames">Videogames</mat-option>
+                <mat-option value="Music">Music</mat-option>
+                <mat-option value="Frontend">Frontend</mat-option>
+                <mat-option value="Backend">Backend</mat-option>
+                <mat-option value="Blockchain">Blockchain</mat-option>
+            </mat-select>
+            @if (selected.hasError('required')) {
+            <mat-error>You must make a selection</mat-error>
+            }
+        </mat-form-field>
+    </div>
+    <div class="forms">
+      <mat-form-field class="form">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" name="title" id="inputTitle" [(ngModel)]="title" [formControl]="titleFormControl">
+            @if (title) {
+              <button matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+            @if (titleFormControl.hasError('required')) {
+              <mat-error>Title is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+    </div>
+    <div class="quill">
+        <quill-editor [(ngModel)]="photo" name="photo" placeholder="photo" [formControl]="photoFormControl"></quill-editor>
+    </div>
+    <p class="label">Information:</p>
+    <div class="quill">
+        <quill-editor [(ngModel)]="text" name="text"  placeholder="text" [formControl]="textFormControl"></quill-editor>
+    </div>
+    <button type="submit" mat-raised-button color="primary" class="create-btn">Create</button>
+  </form>
 </section>
-<section>
-  <div class="quill">
-    <quill-editor></quill-editor>
-  </div>
-</section>
+
 

@@ -43,13 +43,10 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  nameFormControl = new FormControl('', [Validators.required]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  email!: string;
+  name!: string;
   password!: string;
 
   constructor(
@@ -61,15 +58,15 @@ export class AuthComponent {
 
   signIn() {
     const user: AuthenticationUser = {
-      email: this.email,
+      name: this.name,
       password: this.password,
     };
 
-    if (this.emailFormControl.invalid || this.passwordFormControl.invalid) {
+    if (this.nameFormControl.invalid || this.passwordFormControl.invalid) {
       this.flashMessageService.show('Please fill in all required fields.');
       return;
     } else if (
-      !this.emailFormControl.invalid ||
+      !this.nameFormControl.invalid ||
       !this.passwordFormControl.invalid
     ) {
       // Успешная аутентификация

@@ -6,6 +6,6 @@ export interface RegistrationUser {
 }
 
 export interface AuthenticationUser {
-  email: string;
+  name: string;
   password: string;
 }

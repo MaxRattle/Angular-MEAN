@@ -5,17 +5,17 @@
         <form (submit)="signIn()" class="forms">
             <form class="form">
                 <mat-form-field class="field-full-width">
-                    <mat-label>Email</mat-label>
+                    <mat-label>Username</mat-label>
                     <input
-                    type="email"
+                    type="name"
                     matInput
-                    [formControl]="emailFormControl"
-                    placeholder="Ex. pat@example.com"
-                    [(ngModel)]="email"
-                    name = "email">
-                    @if (emailFormControl.hasError('required')) {
+                    [formControl]="nameFormControl"
+                    placeholder="Username"
+                    [(ngModel)]="name"
+                    name = "name">
+                    @if (nameFormControl.hasError('required')) {
                       <mat-error>
-                          Email is
+                          Username is
                           <strong>required</strong>
                       </mat-error>
                     }

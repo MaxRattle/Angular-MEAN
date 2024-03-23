@@ -36,9 +36,9 @@ router.post('/reg', async (req, res) => {
 router.post('/auth', async (req, res) => {
 	// Попытаемся найти пользователя
 	try {
-		const check = await user.findOne({ email: req.body.email });
+		const check = await user.findOne({ name: req.body.name });
 		if (!check) {
-			return res.status(404).json({ error: 'User email cannot found' });
+			return res.status(404).json({ error: 'Username cannot found' });
 		}
 		// Сравниваем хешированный пароль с БД с "открытым" паролем
 		const isPasswordMatch = await bcrypt.compare(

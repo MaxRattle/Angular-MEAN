@@ -48,6 +48,6 @@ app.use('/account', account);
 // Применение middleware 'authenticateToken' для защиты маршрутов, требующих аутентификации
 app.use('/account/dashboard', authenticateToken, (req, res) => {
 	res.status(200).json({
-		msg: 'successfull backend dashboard',
+		msg: 'Access is allowed to the dashboard',
 	});
 });

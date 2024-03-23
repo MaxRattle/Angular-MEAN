@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .forms {
   display: flex;
   flex-direction: column;
@@ -5,8 +10,18 @@
 }
 
 .form {
+  margin-top: 45px;
   width: 75%;
-  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.label {
+  display: block;
+  margin: 0 auto;
+  width: 75%;
+  margin-top: 45px;
 }
 
 .quill {
@@ -15,7 +30,17 @@
   justify-content: center;
   margin: 0 auto;
   width: 75%;
+  flex-direction: column;
 }
 quill-editor {
   width: 100%;
+}
+
+.create-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 80px;
+  width: 75%;
 }

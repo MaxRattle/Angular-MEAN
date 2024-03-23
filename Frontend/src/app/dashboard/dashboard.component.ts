@@ -18,7 +18,13 @@ import { FormGroupDirective } from '@angular/forms';
 
 import { QuillModule } from 'ngx-quill';
 
-//
+import { FlashMessageService } from '../services/flash-message.service';
+// ser
+import { Router } from '@angular/router';
+
+import { Post } from '../interfaces/post';
+
+// Кастомный обработчик ошибок
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -51,9 +57,62 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  title = '';
-
-  selected = new FormControl('', [Validators.required]);
-
+  selected = new FormControl('', [
+    Validators.required,
+    Validators.minLength(1),
+  ]);
   matcher = new MyErrorStateMatcher();
+
+  titleFormControl = new FormControl('', [Validators.required]);
+
+  photoFormControl = new FormControl('', [Validators.required]);
+  textFormControl = new FormControl('', [Validators.required]);
+
+  // имена обрабатываемых полей
+  category!: string;
+  title!: string;
+  photo!: string;
+  text!: string;
+
+  constructor(
+    private flashMessageService: FlashMessageService,
+    // private regService: RegService,
+    private router: Router
+  ) {}
+
+  createPost() {
+    // Вынес в переменные для лучшей типизации и обработок ошибок
+    const authUser = localStorage.getItem('authUser');
+    const author = authUser ? JSON.parse(authUser).name : 'Unknown'; // Если authUser равно null, то автор будет 'Unknown'
+
+    const post: Post = {
+      category: this.category,
+      title: this.title,
+      photo: this.photo,
+      text: this.text,
+      author: author,
+      date: new Date(),
+    };
+    // Оповещения об отправке
+    if (
+      this.selected.invalid ||
+      this.titleFormControl.invalid ||
+      this.photoFormControl.invalid ||
+      this.textFormControl.invalid
+    ) {
+      this.flashMessageService.show('Please fill in all required fields.');
+      return;
+    } else if (
+      !this.selected.invalid ||
+      !this.titleFormControl.invalid ||
+      !this.photoFormControl.invalid ||
+      !this.textFormControl.invalid
+    ) {
+      this.flashMessageService.show('Submit sucess.');
+      console.log('Post created');
+      // this.regService.regUser(user);
+      // this.router.navigate(['/account/auth']);
+      return;
+    }
+  }
 }
