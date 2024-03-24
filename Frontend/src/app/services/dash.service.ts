@@ -35,4 +35,8 @@ export class DashService {
   getPostById(_id: any): Observable<Post> {
     return this.http.get<Post>(`http://localhost:3000/post/${_id}`);
   }
+
+  removePostById(_id: any): Observable<Post> {
+    return this.http.delete<Post>(`http://localhost:3000/post/${_id}`);
+  }
 }

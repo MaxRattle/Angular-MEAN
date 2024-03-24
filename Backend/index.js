@@ -52,6 +52,15 @@ app.get('/post/:id', (req, res) => {
 	postDash.findById(id).then(posts => res.json(posts));
 });
 
+// Удаление постов по id
+app.delete('/post/:id', (req, res) => {
+	let url = req.url.split('/');
+	id = url[2];
+	postDash
+		.deleteOne({ _id: id })
+		.then(() => res.json({ success: 'was remove post' }));
+});
+
 // Если адресс начинаяется с /account, тогда вызывается файл роутинга
 app.use('/account', account);
 

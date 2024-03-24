@@ -1,9 +1,29 @@
 <app-header></app-header>
-<p>post works!</p>
 <div>
     @if (post$ | async; as post ) {
-    <h1>
-        {{post.title}}
-    </h1>
+    <div>
+        <h1>
+            {{post.title}}
+        </h1>
+        @if(name === post.author){
+        <button class="btn_remove" (click)="removePost(post._id)">Remove post</button>
+        }
+    </div>
+    <div class="card_tittle">
+        <h3>{{post.category}}</h3>
+        <small>
+            Author: {{post.author}}, Date:
+            <span>{{post.date | date:'MMMM d, y, h:mm'}}</span>
+        </small>
+    </div>
+    <mat-card class="card">
+        <quill-view [content]="post.photo"></quill-view>
+        <mat-card-content>
+            <!-- <h1>
+                <a [routerLink]="['post', post._id]">{{post.title}}</a>
+            </h1> -->
+            <quill-view [content]="post.text"></quill-view>
+        </mat-card-content>
+    </mat-card>
     }
 </div>
