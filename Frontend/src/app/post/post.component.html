@@ -1,0 +1,9 @@
+<app-header></app-header>
+<p>post works!</p>
+<div>
+    @if (post$ | async; as post ) {
+    <h1>
+        {{post.title}}
+    </h1>
+    }
+</div>

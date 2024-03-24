@@ -40,7 +40,7 @@
                     <span>{{post.date | date:'MMMM d, y, h:mm'}}</span>
                 </div>
                 <h1>
-                    <a href="">{{post.title}}</a>
+                    <a [routerLink]="['post', post._id]">{{post.title}}</a>
                 </h1>
                 <quill-view [content]="post.text"></quill-view>
             </mat-card-content>

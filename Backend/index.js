@@ -40,9 +40,16 @@ app.listen(PORT, () => {
 	console.log(`Server work on ${PORT}. http://localhost:${PORT}/`);
 });
 
-// Стартовый GET request для '/'
+// Стартовый GET request для '/' и получение постов
 app.get('/', (req, res) => {
 	postDash.find().then(posts => res.json(posts));
+});
+
+// Получение постов по id
+app.get('/post/:id', (req, res) => {
+	let url = req.url.split('/');
+	id = url[2];
+	postDash.findById(id).then(posts => res.json(posts));
 });
 
 // Если адресс начинаяется с /account, тогда вызывается файл роутинга

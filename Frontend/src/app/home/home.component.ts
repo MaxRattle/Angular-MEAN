@@ -14,6 +14,8 @@ import { Post } from '../interfaces/post';
 
 import { DatePipe } from '@angular/common';
 
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -24,13 +26,14 @@ import { DatePipe } from '@angular/common';
     MatCardModule,
     QuillModule,
     DatePipe,
+    RouterLink,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   posts: Post[] = [];
-  // пока что так
+
   constructor(private dashService: DashService) {}
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import { Post } from '../interfaces/post';
 import { FlashMessageService } from './flash-message.service';
 import { Router } from '@angular/router';
 
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +30,9 @@ export class DashService {
     return this.http.get('http://localhost:3000/').pipe(
       map((res: any) => res) // Просто возвращаем ответ как есть
     );
+  }
+
+  getPostById(_id: any): Observable<Post> {
+    return this.http.get<Post>(`http://localhost:3000/post/${_id}`);
   }
 }

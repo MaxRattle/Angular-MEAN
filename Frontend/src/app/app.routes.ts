@@ -6,10 +6,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
+import { PostComponent } from './post/post.component';
+
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'account/reg', component: RegComponent },
   { path: 'account/auth', component: AuthComponent },
+  { path: 'post/:id', component: PostComponent },
   {
     path: 'account/dashboard',
     component: DashboardComponent,
