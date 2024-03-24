@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken'); // Импорт для аутентифик
 const database = require('./config/db'); // Импорт секретного ключа из db
 const cors = require('cors'); // Импорт cors, позволяет принимать запросы c Frontend
 
+// Импорт модели постов
+const postDash = require('./models/post');
+
 // Создаем экземпляр приложения Express
 const app = express();
 const PORT = 3000; // Общепринятый порт сервера
@@ -13,11 +16,11 @@ const PORT = 3000; // Общепринятый порт сервера
 // Разрешаем CORS запросы для всех доменов // пока что так
 app.use(cors());
 
-// Middleware для парсинга тела запроса как JSON
-app.use(express.json());
+// Middleware для парсинга JSON тела запроса c увеличенным лимитом
+app.use(express.json({ limit: '50mb' }));
 
 // Обработка входящих запросов, которые передают данные в формате x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 
 // Middleware для проверки токена
 const authenticateToken = (req, res, next) => {
@@ -37,9 +40,9 @@ app.listen(PORT, () => {
 	console.log(`Server work on ${PORT}. http://localhost:${PORT}/`);
 });
 
-// Стартовый GER request для '/'
+// Стартовый GET request для '/'
 app.get('/', (req, res) => {
-	res.send('Main page');
+	postDash.find().then(posts => res.json(posts));
 });
 
 // Если адресс начинаяется с /account, тогда вызывается файл роутинга

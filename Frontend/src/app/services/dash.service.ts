@@ -5,6 +5,8 @@ import { Post } from '../interfaces/post';
 import { FlashMessageService } from './flash-message.service';
 import { Router } from '@angular/router';
 
+import { Observable, map } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,5 +24,11 @@ export class DashService {
         this.router.navigate(['/']);
       },
     });
+  }
+
+  getAllPosts(): Observable<any> {
+    return this.http.get('http://localhost:3000/').pipe(
+      map((res: any) => res) // Просто возвращаем ответ как есть
+    );
   }
 }
