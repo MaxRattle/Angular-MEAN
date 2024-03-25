@@ -2,12 +2,12 @@
 <section>
     <mat-chip-listbox aria-label="Fish selection">
         <div class="nav">
-            <mat-chip-option class="nav_element" selected>Anime</mat-chip-option>
-            <mat-chip-option class="nav_element">Videogames</mat-chip-option>
-            <mat-chip-option class="nav_element">Music</mat-chip-option>
-            <mat-chip-option class="nav_element">Frontend</mat-chip-option>
-            <mat-chip-option class="nav_element">Backend</mat-chip-option>
-            <mat-chip-option class="nav_element">Blockchain</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Anime')" class="nav_element" selected>Anime</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Videogames')" class="nav_element">Videogames</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Music')" class="nav_element">Music</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Frontend')" class="nav_element">Frontend</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Backend')" class="nav_element">Backend</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Blockchain')" class="nav_element">Blockchain</mat-chip-option>
         </div>
     </mat-chip-listbox>
 </section>
@@ -25,7 +25,7 @@
 </section>
 <section>
     <div class="cards_block">
-        @for (post of posts; track $index) {
+        @for (post of posts | sortPost:category; track $index;) {
         <mat-card class="card">
             <!-- <mat-card-header>
                 <div mat-card-avatar class="card_header-image"></div>
@@ -36,7 +36,7 @@
             <quill-view [content]="post.photo"></quill-view>
             <mat-card-content>
                 <div class="card_tittle">
-                    <h3>{{post.category}}</h3>
+                    <h3>{{post.category }}</h3>
                     <span>{{post.date | date:'MMMM d, y, h:mm'}}</span>
                 </div>
                 <h1>

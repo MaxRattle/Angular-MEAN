@@ -16,6 +16,8 @@ import { DatePipe } from '@angular/common';
 
 import { RouterLink } from '@angular/router';
 
+import { SortPostPipe } from '../pipes/sort-post.pipe';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -27,6 +29,7 @@ import { RouterLink } from '@angular/router';
     QuillModule,
     DatePipe,
     RouterLink,
+    SortPostPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -46,5 +49,12 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+  }
+
+  category!: string;
+
+  setCategory(category: string) {
+    this.category = category;
+    console.log(category);
   }
 }
