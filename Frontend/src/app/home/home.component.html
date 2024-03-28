@@ -2,7 +2,7 @@
 <section>
     <mat-chip-listbox aria-label="Fish selection">
         <div class="nav">
-            <mat-chip-option (click)="setCategory('Anime')" class="nav_element" selected>Anime</mat-chip-option>
+            <mat-chip-option (click)="setCategory('Anime')" class="nav_element">Anime</mat-chip-option>
             <mat-chip-option (click)="setCategory('Videogames')" class="nav_element">Videogames</mat-chip-option>
             <mat-chip-option (click)="setCategory('Music')" class="nav_element">Music</mat-chip-option>
             <mat-chip-option (click)="setCategory('Frontend')" class="nav_element">Frontend</mat-chip-option>
@@ -15,11 +15,11 @@
     <div class="home_picture">
         <img class="picture" src="../../assets/blog.png" alt="blog-picture">
         <div class="home_description">
-            <h1 class="title">Welcome to my blog!</h1>
+            <h1 class="title">Welcome to my <span class="blog">blog!</span></h1>
             <p class="title_p">
                 This blog is dedicated to various topics that are interesting to me.
             </p>
-            <p class="title_continue">Continue reading...</p>
+            <p class="title_continue">Continue reading... or you can write me in <a class="tg" href="https://t.me/maxrattle99">telegram :&#41;</a></p>
         </div>
     </div>
 </section>
@@ -27,27 +27,17 @@
     <div class="cards_block">
         @for (post of posts | sortPost:category; track $index;) {
         <mat-card class="card">
-            <!-- <mat-card-header>
-                <div mat-card-avatar class="card_header-image"></div>
-                <mat-card-title>Shiba Inu</mat-card-title>
-                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-            </mat-card-header> -->
-            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-            <quill-view [content]="post.photo"></quill-view>
+            <quill-view class="img" [content]="post.photo"></quill-view>
             <mat-card-content>
                 <div class="card_tittle">
-                    <h3>{{post.category }}</h3>
-                    <span>{{post.date | date:'MMMM d, y, h:mm'}}</span>
+                    <h2>{{post.category }}</h2>
+                    <h2>{{post.date | date:'MMMM d, y, h:mm'}}</h2>
                 </div>
                 <h1>
                     <a [routerLink]="['post', post._id]">{{post.title}}</a>
                 </h1>
                 <quill-view [content]="post.text"></quill-view>
             </mat-card-content>
-            <!-- <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-            </mat-card-actions> -->
         </mat-card>
         }
     </div>

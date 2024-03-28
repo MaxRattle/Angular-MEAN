@@ -45,7 +45,12 @@ export class HomeComponent implements OnInit {
       (err) => {},
       () => {
         for (let i = 0; i < this.posts.length; i++) {
-          this.posts[i].text = this.posts[i].text.substring(0, 250);
+          // Проверяем, длиннее ли текст, чем 250 символов
+          if (this.posts[i].text.length > 250) {
+            // Если да, обрезаем до 250 символов и добавляем "..."
+            this.posts[i].text = this.posts[i].text.substring(0, 247) + '...';
+          }
+          // Если текст короче 250 символов, ничего не делаем
         }
       }
     );
@@ -54,7 +59,11 @@ export class HomeComponent implements OnInit {
   category!: string;
 
   setCategory(category: string) {
-    this.category = category;
-    console.log(category);
+    if (category === this.category) {
+      this.category = '';
+    } else {
+      this.category = category;
+      console.log(category);
+    }
   }
 }

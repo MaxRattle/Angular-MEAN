@@ -1,29 +1,26 @@
 <app-header></app-header>
-<div>
+<section>
+  <div class="main_block">
     @if (post$ | async; as post ) {
-    <div>
-        <h1>
+    <div class="head_post">
+        <h1 class="title_post">
             {{post.title}}
         </h1>
         @if(name === post.author){
-        <button class="btn_remove" (click)="removePost(post._id)">Remove post</button>
+        <button mat-fab color="warn" aria-label="Example icon button with a delete icon" class="btn_remove" (click)="removePost(post._id)"><mat-icon>delete</mat-icon></button>
         }
     </div>
-    <div class="card_tittle">
-        <h3>{{post.category}}</h3>
-        <small>
-            Author: {{post.author}}, Date:
-            <span>{{post.date | date:'MMMM d, y, h:mm'}}</span>
-        </small>
+    <div class="card_tittle_post">
+        <h2>{{post.category}}</h2>
+        <h2>Author: {{post.author}},</h2>
+        <h2>Date: {{post.date | date:'MMMM d, y, h:mm'}}</h2>
     </div>
-    <mat-card class="card">
-        <quill-view [content]="post.photo"></quill-view>
+    <mat-card class="card_post">
+        <quill-view  [content]="post.photo"></quill-view>
         <mat-card-content>
-            <!-- <h1>
-                <a [routerLink]="['post', post._id]">{{post.title}}</a>
-            </h1> -->
             <quill-view [content]="post.text"></quill-view>
         </mat-card-content>
     </mat-card>
     }
-</div>
+  </div>
+</section>

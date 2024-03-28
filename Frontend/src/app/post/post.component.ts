@@ -20,6 +20,9 @@ import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { FlashMessageService } from '../services/flash-message.service';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-post',
   standalone: true,
@@ -30,6 +33,8 @@ import { FlashMessageService } from '../services/flash-message.service';
     QuillModule,
     MatCardModule,
     RouterLink,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

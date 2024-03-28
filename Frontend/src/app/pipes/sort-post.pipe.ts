@@ -10,7 +10,7 @@ export class SortPostPipe implements PipeTransform {
       return posts;
     }
     return posts.filter((posts: any) => {
-      return posts.category.toLowerCase() == category.toLowerCase();
+      return posts.category.toLowerCase() === category.toLowerCase();
     });
   }
 }
