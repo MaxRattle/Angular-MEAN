@@ -11,7 +11,7 @@ const postDash = require('./models/post');
 
 // Создаем экземпляр приложения Express
 const app = express();
-const PORT = 3000; // Общепринятый порт сервера
+const PORT = process.env.PORT; // Общепринятый порт сервера
 
 // Разрешаем CORS запросы для всех доменов // пока что так
 app.use(cors());

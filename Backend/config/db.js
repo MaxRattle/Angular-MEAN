@@ -1,4 +1,4 @@
 module.exports = {
-	db: 'mongodb://localhost:27017/web-blog',
-	secret: 'just_secret_key',
+	db: process.env.MONGODB_URL,
+	secret: process.env.SECRET,
 };
