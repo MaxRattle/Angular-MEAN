@@ -94,7 +94,9 @@ export class AuthComponent {
           });
 
           this.http
-            .get('http://localhost:3000/account/dashboard', { headers })
+            .get('https://angular-mean.onrender.com/account/dashboard', {
+              headers,
+            })
             .subscribe({
               next: () => {
                 // Обработка успешного доступа

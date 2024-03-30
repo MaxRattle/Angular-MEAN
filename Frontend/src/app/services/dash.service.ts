@@ -18,25 +18,29 @@ export class DashService {
   ) {}
 
   dashUser(post: Post) {
-    this.http.post('http://localhost:3000/account/dashboard', post).subscribe({
-      next: () => {
-        this.flashMessageService.show('Submit sucess.');
-        this.router.navigate(['/']);
-      },
-    });
+    this.http
+      .post('https://angular-mean.onrender.com/account/dashboard', post)
+      .subscribe({
+        next: () => {
+          this.flashMessageService.show('Submit sucess.');
+          this.router.navigate(['/']);
+        },
+      });
   }
 
   getAllPosts(): Observable<any> {
-    return this.http.get('http://localhost:3000/').pipe(
+    return this.http.get('https://angular-mean.onrender.com/').pipe(
       map((res: any) => res) // Просто возвращаем ответ как есть
     );
   }
 
   getPostById(_id: any): Observable<Post> {
-    return this.http.get<Post>(`http://localhost:3000/post/${_id}`);
+    return this.http.get<Post>(`https://angular-mean.onrender.com/post/${_id}`);
   }
 
   removePostById(_id: any): Observable<Post> {
-    return this.http.delete<Post>(`http://localhost:3000/post/${_id}`);
+    return this.http.delete<Post>(
+      `https://angular-mean.onrender.com/post/${_id}`
+    );
   }
 }

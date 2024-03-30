@@ -15,13 +15,15 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   authUser(user: AuthenticationUser): Observable<any> {
-    return this.http.post('http://localhost:3000/account/auth', user).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
-          this.token = response.token;
-        }
-      })
-    );
+    return this.http
+      .post('https://angular-mean.onrender.com/account/auth', user)
+      .pipe(
+        tap((response: any) => {
+          if (response && response.token) {
+            this.token = response.token;
+          }
+        })
+      );
   }
 
   private handleError(error: HttpErrorResponse) {
