@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.field-full-width {
+  width: 100%;
+}
+
+.checkbox {
+  display: block;
+  margin: 0 auto;
+}
+
+.sign-in {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin-top: 15px;
+  button {
+    width: 100%;
+    max-width: 500px;
+  }
+}

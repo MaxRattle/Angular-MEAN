@@ -1,0 +1,22 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.home,
+.dashboard,
+.in,
+.up,
+.logout {
+  margin: 1.8vw;
+}
+
+.blog {
+  font-size: 18px;
+  font-weight: bolder;
+  color: #000000a1;
+  margin: 1.8vw;
+}
+
+.logout {
+  background-color: #36f44685;
+}

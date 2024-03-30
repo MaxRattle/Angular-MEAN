@@ -1,0 +1,45 @@
+@import "../node_modules/quill/dist/quill.snow.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// задаем размеры img постов
+mat-card img {
+  height: 30vh; // красота
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+
+  @media screen and (max-width: 680px) {
+    height: 100%;
+  }
+}
+
+.ql-editor {
+  padding: 0;
+  padding-left: 0.1vw;
+  padding-right: 0.1vw;
+}
+mat-card-content quill-view p {
+  font-size: 1.8vw;
+  text-align: justify;
+  @media screen and (max-width: 1100px) {
+    font-size: 2.5vw;
+  }
+  @media screen and (max-width: 680px) {
+    font-size: 3.5vw;
+  }
+}
+
+.card_post img {
+  height: 100% !important;
+  width: 97% !important;
+  margin-bottom: 1.8vw;
+}

@@ -1,0 +1,26 @@
+<app-header></app-header>
+<section>
+  <div class="main_block">
+    @if (post$ | async; as post ) {
+    <div class="head_post">
+        <h1 class="title_post">
+            {{post.title}}
+        </h1>
+        @if(name === post.author){
+        <button mat-fab color="warn" aria-label="Example icon button with a delete icon" class="btn_remove" (click)="removePost(post._id)"><mat-icon>delete</mat-icon></button>
+        }
+    </div>
+    <div class="card_tittle_post">
+        <h2>{{post.category}}</h2>
+        <h2>Author: {{post.author}},</h2>
+        <h2>Date: {{post.date | date:'MMMM d, y, h:mm'}}</h2>
+    </div>
+    <mat-card class="card_post">
+        <quill-view  [content]="post.photo"></quill-view>
+        <mat-card-content>
+            <quill-view [content]="post.text"></quill-view>
+        </mat-card-content>
+    </mat-card>
+    }
+  </div>
+</section>
